@@ -1,0 +1,7 @@
+
+.vagrant/
+
+# Vim droppings
+*~
+*.swp
+
