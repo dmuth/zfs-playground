@@ -10,9 +10,7 @@ set -e
 UPDATE_FILE=/var/run/apt-update-last-run
 
 
-echo "# "
 echo "# Making sure apt is up to date..."
-echo "# "
 
 #
 # Check to see if apt update was run within the last day.
@@ -30,9 +28,7 @@ else
 fi
 
 
-echo "# "
 echo "# Installing ZFS..."
-echo "# "
 
 FOUND=$(dpkg -l | grep zfsutils || true)
 
@@ -45,9 +41,7 @@ else
 
 fi
 
-echo "# "
 echo "# Updating \$PATH for vagrant user..."
-echo "# "
 FOUND=$( grep "/vagrant/bin" /home/vagrant/.bashrc || true)
 
 if test "${FOUND}"
