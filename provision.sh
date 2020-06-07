@@ -96,7 +96,7 @@ fi
 #
 NUM_DISKS=10
 BLOCK_SIZE_MB=100
-COUNT=1
+COUNT=11
 SIZE=$(( $BLOCK_SIZE_MB * $COUNT ))
 
 for I in $(seq ${NUM_DISKS})
@@ -114,5 +114,5 @@ do
 
 done
 
-ls -lh /disks
+echo "# Done!"
 
