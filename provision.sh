@@ -56,15 +56,15 @@ fi
 
 
 echo "# Disabling dynamic MOTD if not done already..."
-FOUND=$(grep "session.*motd=/run/motd.dynamic" /etc/pam.d/login || true)
-if test ! "${FOUND}"
+FOUND=$(grep "^session.*motd=/run/motd.dynamic" /etc/pam.d/login || true)
+if test "${FOUND}"
 then
 	echo "# Disabling dynamic MOTD from /etc/pam.d/login..."
 	sed -i '/^session.*motd=\/run\/motd.dynamic/s/^/### /' /etc/pam.d/login
 fi
 
-FOUND=$(grep "session.*motd=/run/motd.dynamic" /etc/pam.d/sshd || true)
-if test ! "${FOUND}"
+FOUND=$(grep "^session.*motd=/run/motd.dynamic" /etc/pam.d/sshd || true)
+if test "${FOUND}"
 then
 	echo "# Disabling dynamic MOTD from /etc/pam.d/sshd..."
 	sed -i '/^session.*motd=\/run\/motd.dynamic/s/^/### /' /etc/pam.d/sshd
@@ -82,4 +82,11 @@ then
 EOF
 
 fi
+
+if test ! -d /disks
+then
+	echo "Making /disks to hold fake disks."
+	mkdir /disks
+fi
+
 
