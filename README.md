@@ -3,6 +3,8 @@
 
 ZFS testing environment where disk failures and data corruption can be simulated
 
+<img src="./img/zfs-playground-logo.png" align="right" />
+
 ## Quick Start
 
 - Clone this repo
@@ -33,6 +35,11 @@ Here are major things I want to build in to make this actually useful for playin
 A: It's a UI consideration--I want checksums a little smaller, which will be easier to read.  Keep in mind that the context is "simulating a filesystem", versus "code that is being run in production".  But hey--if this is useful enough that you're looking at using this in production(!), come talk to me and I'll see what I can do. :-)
 
 
+## Credits
+
+- The logo was made over at https://www.freelogodesign.org/
+
+
 ## Who built this? / Contact
 
 My name is Douglas Muth, and I am a software engineer in Philadelphia, PA.
@@ -43,5 +50,6 @@ There are several ways to get in touch with me:
 - [LinkedIn](http://localhost:8080/www.linkedin.com/in/dmuth)
 
 Feel free to reach out to me if you have any comments, suggestions, or bug reports.
+
 
 
