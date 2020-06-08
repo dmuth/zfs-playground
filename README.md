@@ -1,9 +1,9 @@
 
+<img src="./img/zfs-playground-logo.png" align="right" />
+
 # ZFS Playground
 
 ZFS testing environment where disk failures and data corruption can be simulated
-
-<img src="./img/zfs-playground-logo.png" align="right" />
 
 ## Quick Start
 
