@@ -1,0 +1,80 @@
+#!/bin/bash
+#
+# This script is used to create a file which serves as a device for ZFS.
+#
+
+if test ! "$2"
+then
+	echo "! "
+	echo "! Syntax: $0 filename size_in_megabytes"
+	echo "! "
+	echo "! Note the size will be founded up to the next larger increment of 102 Megabytes."
+	echo "! That is so dd can be given a decent buffer size."
+	echo "! "
+	exit 1
+fi
+
+FILE=$1
+SIZE_MB=$2
+
+#
+# Sanitize the filename and put it into /disks/.
+#
+FILE=$(echo $FILE | sed -e "s/[^a-z0-9-]/_/gi")
+FILE="/disks/${FILE}"
+
+#
+# Get the raw number of bytes
+#
+SIZE_BYTES=$(echo "$SIZE_MB * 1024 * 1024" | bc )
+
+
+#
+# Chosing this size because 128 * 8 is 1024 MB, or 1 GB.
+#
+BLOCK_SIZE=128
+
+
+#
+# Get the number of blocks to write, and the remainder which would be for the final block.
+#
+COUNT=$(( ${SIZE_MB} / ${BLOCK_SIZE} ))
+REMAINDER_MB=$(( ${SIZE_MB} % ${BLOCK_SIZE} ))
+
+if test $COUNT -lt 1
+then
+	echo "! "
+	echo "! Requested size is smaller than ${BLOCK_SIZE} MB, refusing to create a file that small."
+	echo "! "
+	exit 1
+fi
+
+#
+# If the file already exists, get its current size.
+#
+CURRENT_SIZE=0
+if test -f $FILE
+then
+	CURRENT_SIZE=$(wc -c ${FILE} | awk '{print $1}' )
+	echo "# File '${FILE}' currently exists, size is '${CURRENT_SIZE}' bytes."
+fi
+
+#
+# If the sizes match, we're done.
+#
+if test $CURRENT_SIZE -eq $SIZE_BYTES
+then
+	echo "# Requested size of ${SIZE_BYTES} is the same as current size of ${CURRENT_SIZE}, nothing to do!"
+	exit 
+fi
+
+echo "# Creating virtual disk '${FILE}' of size ${SIZE_MB} MB in ${COUNT} ${BLOCK_SIZE} MB blocks..."
+dd if=/dev/zero of=${FILE} bs=${BLOCK_SIZE}M count=${COUNT}
+
+if test "${REMAINDER_MB}" -ne 0
+then
+	echo "# Oh!  We have a remainer write of ${REMAINDER_MB} MB..."
+	dd if=/dev/zero bs=${REMAINDER_MB}M count=1 >> ${FILE}
+fi
+
+
