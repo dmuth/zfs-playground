@@ -95,23 +95,12 @@ fi
 # Since devices are files in UNIX systems, this works GREAT for testing purposes!
 #
 NUM_DISKS=10
-BLOCK_SIZE_MB=100
-COUNT=11
-SIZE=$(( $BLOCK_SIZE_MB * $COUNT ))
+SIZE_MB=1024
 
 for I in $(seq ${NUM_DISKS})
 do
-	FILE="/disks/disk${I}"
-
-	if test -f ${FILE}
-	then
-		echo "# Oops, file '${FILE}' already exists, skipping!"
-		continue
-	fi
-
-	echo "# Creating virtual disk '${FILE}' of size ${SIZE} MB..."
-	dd if=/dev/zero of=${FILE} bs=${BLOCK_SIZE_MB}M count=${COUNT}
-
+	FILE="disk${I}"
+	/vagrant/bin/zfs-add-disk-file ${FILE} 1024
 done
 
 echo "# Done!"
