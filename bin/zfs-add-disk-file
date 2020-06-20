@@ -3,6 +3,9 @@
 # This script is used to create a file which serves as a device for ZFS.
 #
 
+# Errors are fatal
+set -e
+
 if test ! "$2"
 then
 	echo "! "

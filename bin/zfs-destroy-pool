@@ -3,6 +3,9 @@
 # Wrapper script to destroy a ZFS pool.
 #
 
+# Errors are fatal
+set -e
+
 if test ! "$1"
 then
 	echo "! "

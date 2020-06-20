@@ -3,6 +3,9 @@
 # Simulate a disk failure by removing one of the ZFS disk files in this lab.
 #
 
+# Errors are fatal
+set -e
+
 if test ! "$1"
 then
 	echo "! "
