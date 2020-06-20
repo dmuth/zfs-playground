@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Wrapper script to destroy a ZFS pool only if it exists
+#
+
+# Errors are fatal
+set -e
+
+if test ! "$1"
+then
+	echo "! "
+	echo "! Syntax: $0 pool_name"
+	echo "! "
+	exit 1
+fi
+
+NAME=$1
+
+if test "$(zpool list ${NAME} 2>/dev/null )"
+then
+	zfs-destroy-pool ${NAME}
+fi
+
