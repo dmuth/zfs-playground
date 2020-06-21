@@ -17,7 +17,7 @@ fi
 
 
 DIR=$1
-TARGET=/data/sha1/mountpoints/$(echo ${DIR} | sed -e "s/[^a-z0-9-]/_/ig")
+TARGET=/data/sha1/$(echo ${DIR} | sed -e "s/[^a-z0-9-]/_/ig")
 TMP=$(mktemp /tmp/sha1-save-files.XXXXXX)
 
 #
