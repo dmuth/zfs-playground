@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# This script recursively calculates SHA1 sums on a directory and everything under it, 
+# and wrotes them to a location for locate comparison.
+#
+
+# Errors are fatal
+set -e
+
+if test ! "$1"
+then
+	echo "! "
+	echo "! Syntax: $0 directory"
+	echo "! "
+	exit 1
+fi
+
+
+DIR=$1
+TARGET=/data/sha1/mountpoints/$(echo ${DIR} | sed -e "s/[^a-z0-9-]/_/ig")
+TMP=$(mktemp /tmp/sha1-save-files.XXXXXX)
+
+#
+# Make sure our target's directory exists 
+#
+mkdir -p $(dirname ${TARGET})
+
+
+echo "# Generating SHA1 sums on ${DIR}..."
+find ${DIR} -type f | sort | xargs sha1sum | tee ${TMP}
+echo "# Done!"
+
+mv ${TMP} ${TARGET}
+
+
+

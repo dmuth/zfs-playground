@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# This script recursively calculates SHA1 sums on a directory and everything under it, 
+# and compares it to the result from the previous time this was done.
+#
+
+# Errors are fatal
+set -e
+
+if test ! "$1"
+then
+	echo "! "
+	echo "! Syntax: $0 directory"
+	echo "! "
+	exit 1
+fi
+
+
+DIR=$1
+TARGET=/data/sha1/mountpoints/$(echo ${DIR} | sed -e "s/[^a-z0-9-]/_/ig")
+
+if test ! -f ${TARGET}
+then
+	echo "! Target file (${TARGET}) not found!  Were checksums previously generated?"
+	exit 1
+fi
+
+TMP=$(mktemp /tmp/sha1-save-files.XXXXXX)
+
+#
+# Make sure our target's directory exists 
+#
+mkdir -p $(dirname ${TARGET})
+
+
+echo "# Generating SHA1 sums on ${DIR}..."
+find ${DIR} -type f | sort | xargs sha1sum | tee ${TMP}
+
+echo "# Comparing this run (${TMP}) to what is saved at ${TARGET}..."
+set +e
+diff $TMP $TARGET
+RETVAL=$?
+set -e
+
+if test "${RETVAL}" -eq 0
+then
+	echo "# OK: Files match!"
+else
+	echo "# FAIL: Mismatches detected!"
+fi
+
+
+
