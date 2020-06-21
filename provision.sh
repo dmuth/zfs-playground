@@ -97,11 +97,19 @@ fi
 NUM_DISKS=10
 SIZE_MB=1024
 
-for I in $(seq ${NUM_DISKS})
+for I in $(seq 0 $(( ${NUM_DISKS} - 1 )) )
 do
 	FILE="disk${I}"
 	/vagrant/bin/zfs-add-disk-file ${FILE} 1024
 done
+
+#
+# Remove our ZFS pool if it already exists, and create it again.
+#
+NAME="zfs-lab"
+/vagrant/bin/zfs-destroy-pool-if-exists ${NAME}
+/vagrant/bin/zfs-create-pool ${NAME} /disks/disk0 /disks/disk1 /disks/disk2
+
 
 echo "# Done!"
 
