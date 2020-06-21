@@ -106,10 +106,17 @@ done
 #
 # Remove our ZFS pool if it already exists, and create it again.
 #
-NAME="zfs-lab"
+NAME="zfs"
 /vagrant/bin/zfs-destroy-pool-if-exists ${NAME}
 /vagrant/bin/zfs-create-pool ${NAME} /disks/disk0 /disks/disk1 /disks/disk2
 
+# Set our Zpool to unmountable.  This is because the main Zpool is treated as 
+# a dataset itself and that really confused me when I created started creating
+# ZFS filesystems.
+zfs set canmount=off ${NAME}
+
+# Create a simple lab filesystem.
+zfs create ${NAME}/lab1
 
 echo "# Done!"
 
