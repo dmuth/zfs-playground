@@ -41,8 +41,6 @@ do
 done
 
 
-
-
 #
 # Get the number of blocks to write, and the remainder which would be for the final block.
 #
@@ -50,11 +48,22 @@ COUNT=$(( ${SIZE} / ${BLOCK_SIZE} ))
 REMAINDER=$(( ${SIZE} % ${BLOCK_SIZE} ))
 
 
-while true; do echo ${STR}; done | dd of=${FILE} bs=${BLOCK_SIZE} count=${COUNT}
+echo "Creating ${FILE} that is ${SIZE} bytes with a block size of ${BLOCK_SIZE}..."
+#
+# There's a good writeup at https://unix.stackexchange.com/a/121888/419242 about why
+# using dd is a really bad a idea.  And while I understand the points the person was making, 
+# there is one thing they missed: memory usage.  Using something like "head -c" for a 1 MB file 
+# will work, but for a 100 MB file that will turn into 100 Megs of RAM being allocated and
+# then deallocated for each file being written.  That's something I'd like to avoid.
+#
+# dd, on the other hand, is very good about RAM usage, especially with smaller block sizes.
+#
+while true; do echo ${STR}; done | dd of=${FILE} bs=${BLOCK_SIZE} count=${COUNT} iflag=fullblock 2>/dev/null
+
 
 if test "${REMAINDER}" -ne 0
 then
-	while true; do echo ${STR}; done | dd bs=${REMAINDER} count=1 >> ${FILE}
+	while true; do echo ${STR}; done | dd bs=${REMAINDER} count=1 iflag=fullblock >> ${FILE} 2>/dev/null
 fi
 
 
