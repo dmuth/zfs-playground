@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# This script is used to create sample files for testing purposes.
+#
+
+# Errors are fatal
+set -e
+
+if test ! "$2"
+then
+	echo "! "
+	echo "! Syntax: $0 filename len_in_bytes"
+	echo "! "
+	exit 1
+fi
+
+
+FILE=$1
+SIZE=$2
+
+#
+# Minimum size will be 1K, and that also makes a good block size for relatively small files.
+#
+BLOCK_SIZE=1024
+
+if test ${SIZE} -lt ${BLOCK_SIZE}
+then
+	echo "! "
+	echo "! Requested size of ${SIZE} is less than block size ${BLOCK_SIZE}. Bailing out!"
+	echo "! "
+	exit 1
+fi
+
+#
+# Create a string that is 80 characters long
+#
+STR=""
+for I in $(seq 8)
+do
+	STR="${STR}xxxxxxxxxx"
+done
+
+
+
+
+#
+# Get the number of blocks to write, and the remainder which would be for the final block.
+#
+COUNT=$(( ${SIZE} / ${BLOCK_SIZE} ))
+REMAINDER=$(( ${SIZE} % ${BLOCK_SIZE} ))
+
+
+while true; do echo ${STR}; done | dd of=${FILE} bs=${BLOCK_SIZE} count=${COUNT}
+
+if test "${REMAINDER}" -ne 0
+then
+	while true; do echo ${STR}; done | dd bs=${REMAINDER} count=1 >> ${FILE}
+fi
+
+

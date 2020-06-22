@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+#
+# This script is used to corrupt bytes in a file.
+# Useful for corrupting the ZFS disks in /disks to test ZFS's recovery mechanisms.
+#
+# This script can be tested as follows:
+#
+# create file.dat 3000; corrupt file.dat --offset 400 --len 10 --num 5 --char X; cat file.dat
+#
+
+import argparse
+import os
+
+parser = argparse.ArgumentParser(description = "Corrupt specific bytes in a file")
+parser.add_argument("file", type = str, help = "The filename to corrupt")
+parser.add_argument("--offset", type = int, default = 0,
+    help = "Number of bytes to seek to (starting is 0)")
+parser.add_argument("--char", type = str, default = "7",
+    help = "The character to write. (default: 7)")
+parser.add_argument("--len", type = int, default = 1, 
+    help = "How many times to write that value? (default: 1)")
+parser.add_argument("--num", type = int, default = 1, 
+    help = "How many times to write that value (skipping ahead by the seek value before writing it again. (default: 1)")
+
+args = parser.parse_args()
+#print(args) # Debugging
+
+#
+# Sanity checking
+#
+if len(args.char) > 1:
+    parser.error("Character '{}' is permitted to be only one byte long!".format(args.char))
+
+size = os.path.getsize(args.file)
+max_offset = (args.offset * args.num) + (args.len - 1)
+
+if max_offset > size:
+    parser.error("File is {} bytes, and these settings would write past the end of the file!".format(size))
+
+#
+# Finally, open our file for reading/writing and start corrupting.
+#
+f = open(args.file, mode = 'rb+', buffering = -1)
+
+times_len = times_num = "time"
+if args.len > 1:
+    times_len = "times"
+if args.num > 1:
+    times_num = "times"
+
+print("Corrupting file {} every {} bytes with the character '{}' repeated {} {} then repeating {} {}.".format(
+    args.file, args.offset, args.char, args.len, times_len, args.num, times_num))
+for i in range(args.num):
+    offset = args.offset * (i+1)
+
+    f.seek(offset)
+
+    for i in range(args.len):
+        f.write(str.encode(args.char))
+
+    print(".", end = "")
+
+f.close()
+
+print()
+print("DONE: Corrupting file {} every {} bytes with the character '{}' repeated {} {} then repeating {} {}.".format(
+    args.file, args.offset, args.char, args.len, times_len, args.num, times_num))
+
