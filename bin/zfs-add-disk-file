@@ -79,4 +79,6 @@ then
 	dd if=/dev/zero bs=${REMAINDER_MB}M count=1 >> ${FILE}
 fi
 
+# Change the file so that only the user that created it can view it.
+chmod 700 ${FILE}
 
