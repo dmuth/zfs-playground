@@ -108,6 +108,7 @@ done
 #
 NAME="zfs"
 /vagrant/bin/zfs-destroy-pool-if-exists ${NAME}
+rm -rfv /${NAME}
 /vagrant/bin/zfs-create-pool ${NAME} /disks/disk0 /disks/disk1 /disks/disk2
 
 # Set our Zpool to unmountable.  This is because the main Zpool is treated as 
