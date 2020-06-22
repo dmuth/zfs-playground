@@ -13,8 +13,8 @@ import os
 
 parser = argparse.ArgumentParser(description = "Corrupt specific bytes in a file")
 parser.add_argument("file", type = str, help = "The filename to corrupt")
-parser.add_argument("--offset", type = int, default = 0,
-    help = "Number of bytes to seek to (starting is 0)")
+parser.add_argument("--offset", type = int, required = True,
+    help = "Number of bytes to seek to.")
 parser.add_argument("--char", type = str, default = "7",
     help = "The character to write. (default: 7)")
 parser.add_argument("--len", type = int, default = 1, 
