@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# This script is used to destroy our lab Zpool.
+#
+
+
+# Errors are fatal
+set -e
+
+
+NAME="zfs"
+/vagrant/bin/zfs-destroy-pool-if-exists ${NAME}
+
+
