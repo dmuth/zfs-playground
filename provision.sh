@@ -70,18 +70,7 @@ then
 	sed -i '/^session.*motd=\/run\/motd.dynamic/s/^/### /' /etc/pam.d/sshd
 fi
 
-if test ! -f /etc/motd
-then
-	echo "# Writing custom /etc/motd file..."
-	cat << EOF > /etc/motd
-#
-# Welcome to the ZFS testing playground!
-#
-# All relevant scripts are in /vagrant/bin/ which is also in your \$PATH!
-#
-EOF
-
-fi
+cp /vagrant/motd /etc/motd
 
 if test ! -d /disks
 then

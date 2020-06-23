@@ -38,6 +38,8 @@ A: It's a UI consideration--I want checksums a little smaller, which will be eas
 ## Credits
 
 - The logo was made over at https://www.freelogodesign.org/
+- <a href="http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Big&t=ZFS%0APlayground">This text to ASCII art generator</a>, for the logo I used in the MOTD message.
+
 
 
 ## Who built this? / Contact
