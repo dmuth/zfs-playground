@@ -46,8 +46,10 @@ do
 
 	done
 
-
 done
 
+
+# All done! Now save the SHA1 hashes.
+sha1-save-files ${TARGET}
 
 
