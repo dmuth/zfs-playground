@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# This script populates a filesystem with dummy files and directories.
+# The files are all uniform in size and strucuture, which makes it easy 
+# to detect if there is any corruption.
+#
+# Finally, sha1 sums are taken of each file so that corruption can be detected
+# with the sha1-save-files tool.
+#
+
+# Errors are fatal
+set -e
+
+
+if test ! "$1"
+then
+	echo "! "
+	echo "! Syntax: $0 target"
+	echo "! "
+	exit 1
+fi
+
+TARGET=$1
+
+NUM_DIRS=10
+NUM_FILES=10
+
+#
+# Create our directories
+#
+for I in $(seq 0 $(( $NUM_DIRS - 1 )) )
+do
+
+	DIR="${TARGET}/dir${I}"
+	mkdir -p ${DIR}
+
+	#
+	# Create our files in each directory
+	#
+	for J in $(seq 0 $(( $NUM_FILES - 1 )) )
+	do
+		FILE="${DIR}/file${J}"
+
+		# 1048576 = 1 MB
+		create ${FILE} 1048576
+
+	done
+
+
+done
+
+
+
