@@ -10,7 +10,7 @@ set -e
 # Change to the directory where these scripts exist.
 # This is necessary because the PATH is not yet set in the provisioner script.
 #
-pushd $(dirname $0)
+pushd $(dirname $0) > /dev/null
 
 if test ! "$1"
 then
