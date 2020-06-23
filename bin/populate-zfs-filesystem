@@ -11,19 +11,33 @@
 # Errors are fatal
 set -e
 
+# Defaults
+NUM_DIRS=10
+NUM_FILES=10
 
 if test ! "$1"
 then
 	echo "! "
-	echo "! Syntax: $0 target"
+	echo "! Syntax: $0 target [ num_dirs [ num_files ] ]"
+	echo "! "
+	echo "! num_dirs - Number of directories to create (default: 10)"
+	echo "! num_files - Number of files in each directory (default: 10)"
 	echo "! "
 	exit 1
 fi
 
 TARGET=$1
 
-NUM_DIRS=10
-NUM_FILES=10
+if test "$2"
+then
+	NUM_DIRS=$2
+fi
+
+if test "$3"
+then
+	NUM_FILES=$3
+fi
+
 
 #
 # Create our directories
