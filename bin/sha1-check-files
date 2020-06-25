@@ -38,7 +38,7 @@ find ${DIR} -type f | sort | xargs sha1sum | tee ${TMP}
 
 echo "# Comparing this run (${TMP}) to what is saved at ${TARGET}..."
 set +e
-diff $TMP $TARGET
+diff $TARGET $TMP
 RETVAL=$?
 set -e
 
@@ -46,7 +46,7 @@ if test "${RETVAL}" -eq 0
 then
 	echo "# OK: Files match!"
 else
-	echo "# FAIL: Mismatches detected!"
+	echo "# FAIL: Mismatches detected! Format is diff between original and current."
 fi
 
 
