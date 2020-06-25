@@ -24,6 +24,7 @@ around with ZFS.  All scripts are in `/vagrant/bin/` in the VM which is also in 
 - `populate-zfs-filesystem` - Uses `create` to populate a target directory with a series of files and directories with 1 MB files.  Useful for testing files for corrption when corrupting a ZFS disk.
 - `sha1-save-files` - Compute SHA1 hashes recursively of a directory and its files and save the files in `/data/`.
 - `sha1-check-files` - Check against previously computed hashes recursively and look for corruption. Output is written in `diff` format.
+- `truncate-disk` - Used to truncate a specific disk image to a specific number of bytes.  Useful to simulate disk failures.
 - `zfs-lab-create` - Stand up a ZFS pool in `/zfs/`, a ZFS filesystem in `/zfs/lab1/`, and populate it with files with `populate-zfs-filesystem`.
 - `zfs-lab-destroy` - Remove a ZFS pool and filesystem created wiht `zfs-lab-create`.
 - Internal Utilities.  These are used by the playground itself but could be useful if you want to change the environment substantially:
