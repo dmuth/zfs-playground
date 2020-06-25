@@ -37,7 +37,7 @@ fi
 STR=""
 for I in $(seq 8)
 do
-	STR="${STR}xxxxxxxxxx"
+	STR="${STR}XXXXXXXXXX"
 done
 
 
