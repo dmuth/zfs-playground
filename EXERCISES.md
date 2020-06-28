@@ -6,6 +6,10 @@
    - Create a single disk Zpool
       - _Hint: Disks are in `/disks/`._
    - Create a Zpool with multiple disks
+   - Craete a ZFS filesystem in the Zpool
+      - _Hints:_
+         - _Use `zfs set canmount=off ZPOOL_NAME` to disable the mountpoint on the Zpool itself._
+         - _...and try `zfs create` to create a ZFS filesystem under the Zpool._
 
 - Less basic exercises:
    - Create a mirrored Zpool
@@ -30,6 +34,16 @@
          - _Try corrupting a disk with: `corrupt --offset 1000 --num 1000000 /disks/disk0`.  This will swiss-cheese the disk in about 40 seconds._
          - _Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful._
 
+- Breaking RAIDZ
+   - Create a RAIDZ Zpool with 3 disks, corrupt `disk0` and `disk1`.  Verify the Zpool is unrecoverable.
+
+
+## Future Exercise Ideas
+
+- Create a raw device in the Zpool and put ext4 on it.
+- Play with snapshots and rollbacks.
+- Create exercises involving RAIDZ2 and RAIDZ3
+- Look into some more advanced features of ZFS and create exercises based on them.
 
 
 
