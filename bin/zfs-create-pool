@@ -9,15 +9,33 @@ set -e
 if test ! "$2"
 then
 	echo "! "
-	echo "! Syntax: $0 pool_name disk1 [ disk2 [ ... ] ] "
+	echo "! Syntax: $0 pool_name [ mirror | raidz2 | raidz3 ] disk1 [ disk2 [ ... ] ] "
+	echo "! "
+	echo "! Specify mirror or raidz2/3 if you want some form of mirroring or RAID."
+	echo "! "
 	echo "! "
 	exit 1
 fi
 
 NAME=$1
+TYPE=""
 shift
 
-echo "# Creating Zpool ${NAME} with disks ${@}..."
-zpool create -f $NAME $@
+if test $1 == "mirror" -o $1 == "raidz" -o $1 == "raidz2" -o $1 == "raidz3"
+then
+	TYPE=$1
+	shift
+fi
+
+
+if test ! "${TYPE}"
+then
+	echo "# Creating Zpool ${NAME} with disks ${@}..."
+else
+	echo "# Creating Zpool ${NAME} of type ${TYPE} with disks ${@}..."
+fi
+
+#set -x # Debugging
+zpool create -f $NAME ${TYPE} $@
 
 
