@@ -31,7 +31,7 @@ FILE="/disks/${FILE}"
 SIZE_BYTES=$(echo "$SIZE_MB * 1024 * 1024" | bc )
 
 
-echo "# Creating virtual disk '${FILE}' of size ${SIZE_MB} MB in..."
+echo "# Creating virtual disk '${FILE}' of size ${SIZE_MB} MB..."
 truncate --size ${SIZE_BYTES} ${FILE}
 
 # Change the file so that only the user that created it can view it.
