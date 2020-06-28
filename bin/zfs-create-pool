@@ -9,7 +9,7 @@ set -e
 if test ! "$2"
 then
 	echo "! "
-	echo "! Syntax: $0 pool_name [ mirror | raidz2 | raidz3 ] disk1 [ disk2 [ ... ] ] "
+	echo "! Syntax: $0 pool_name [ mirror | raidz | raidz2 | raidz3 ] disk1 [ disk2 [ ... ] ] "
 	echo "! "
 	echo "! Specify mirror or raidz2/3 if you want some form of mirroring or RAID."
 	echo "! "
