@@ -4,13 +4,14 @@
 
 ## Basic Exercises
 
-- Create a single disk Zpool
-   - _Hint: Disks are in `/disks/`._
-- Create a Zpool with multiple disks
-- Craete a ZFS filesystem in the Zpool
+- Create a single disk Zpool with disk `/disks/disk0`. Now destroy it.
+- Create a Zpool with disk `/disks/disk0` through `/disks/disk2`.
+- Craete a ZFS filesystem in the Zpool you just created.
    - _Hints:_
       - _Use `zfs set canmount=off ZPOOL_NAME` to disable the mountpoint on the Zpool itself._
       - _...and try `zfs create` to create a ZFS filesystem under the Zpool._
+- <a href="exercise-answers/1_BASIC_EXERCISES.md">Answers</a>
+
 
 ## Less Basic Exercises
 
@@ -48,10 +49,12 @@
 
 ## Future Exercise Ideas
 
-- Create a raw device in the Zpool and put ext4 on it.
+- Disk quotas for ZFS filesystems
 - Play with snapshots and rollbacks.
+- Create a raw device in the Zpool and put ext4 on it.
 - Create exercises involving RAIDZ2 and RAIDZ3
 - Look into some more advanced features of ZFS and create exercises based on them.
+- Stream one ZFS filessytem to another
 
 
 
