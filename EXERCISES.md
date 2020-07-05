@@ -15,22 +15,28 @@
 
 ## Less Basic Exercises
 
-- Create a mirrored Zpool
+- Create a mirrored Zpool with disks `/disks/disk0` and `/disks/disk1`.
    - _Hint: You should only have two disks in a mirrored Zpool._
-- Create a RAID5/RAIDZ Zpool
+- Create a RAID5/RAIDZ Zpool with disks `/disks/disk0` through `/disks/disk2`.
    - _Hint: You should have at least 3 disks._
-- Create a RAID6/RAIDZ2 Zpool
+- Create a RAID6/RAIDZ2 Zpool with disks `/disks/disk0` through `/disks/disk3`.
    - _Hint: You should have at least 4 disks._
-- Create a RAID7/RAIDZ3 Zpool
+- Create a RAID7/RAIDZ3 Zpool with disks `/disks/disk0` through `/disks/disk4`.
    - _Hint: You should have at least 5 disks._
+- <a href="exercise-answers/2_LESS_BASIC_EXERCISES.md">Answers</a>
   
  
 ## Simulating Hardware Failure
 
-- Created a mirrored Zpool, remove `/disks/disk0`, catch the error in ZFS and fix it.
+- Created a mirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS and fix it.
    - _Hints_: 
      - _You can't `rm` a disk file because it won't unlink the innode. _
-     - _Instead, truncate it to zero bytes with `echo > /disks/diskNUM`._
+     - _Instead, truncate it to zero bytes with `echo > /disks/disk0`._
+- Repeat the previous exercise, but test that files are unharmed
+   - _Hints_: 
+      - Run `populate-zfs-filesystem /zfspool/` to create sample files
+      - Run `sha1-save-files /zfspool/` to save SHA1 hashes of those files before simulating failure
+      - After recovery, run `sha1-check-files` to verify that file contents were unharmed
 
 
 ## Simulating Disk Corruption
