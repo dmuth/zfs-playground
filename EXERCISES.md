@@ -28,15 +28,14 @@
  
 ## Simulating Hardware Failure
 
-- Created a mirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS and fix it.
+
+- Created a mirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, fix the pool, verify that files are unharmed.
    - _Hints_: 
-     - _You can't `rm` a disk file because it won't unlink the innode. _
-     - _Instead, truncate it to zero bytes with `echo > /disks/disk0`._
-- Repeat the previous exercise, but test that files are unharmed
-   - _Hints_: 
-      - Run `populate-zfs-filesystem /zfspool/` to create sample files
-      - Run `sha1-save-files /zfspool/` to save SHA1 hashes of those files before simulating failure
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+     - _You can't `rm` a disk file because it won't unlink the inode. _Instead, truncate it to zero bytes with `echo "CORRUPT" > /disks/disk0`._
       - After recovery, run `sha1-check-files` to verify that file contents were unharmed
+      - Run `zfs-add-disk-file disk0 1024` to (re)create the `disk0` file when done with this exercise
+- <a href="exercise-answers/3_SIMULATING_HARDWARE_FAILURE.md">Answers</a>
 
 
 ## Simulating Disk Corruption
