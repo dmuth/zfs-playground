@@ -28,7 +28,6 @@
  
 ## Simulating Hardware Failure
 
-
 - Create an unmirroed Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
    - _Hints_: 
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
@@ -49,9 +48,9 @@
 
 - Create a RAIDZ Zpool with 3 disks, corrupt `disk0`, catch the error in ZFS, and repair the pool. Verify the files are unaffected.
    - _Hints:_
-      - _Run `sha1-save-files /path/to/zfs/filesystem` to save the SHA1s of all files._
-      - _Try corrupting a disk with: `corrupt --offset 1000 --num 1000000 /disks/disk0`.  This will swiss-cheese the disk in about 40 seconds._
-      - _Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful._
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Try corrupting a adisk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
+      - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful.
 
 
 ## Breaking RAIDZ
