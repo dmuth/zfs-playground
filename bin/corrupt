@@ -48,17 +48,37 @@ if args.len > 1:
 if args.repeat > 1:
     times_repeat = "times"
 
-print("Corrupting file {} every {} bytes with the character '{}' repeated {} {} then repeating {} {}.".format(
+
+print("Corrupting file {} every {} bytes with the character '{}' repeated {} {} for {} {}.".format(
     args.file, args.offset, args.char, args.len, times_len, args.repeat, times_repeat))
+
+#
+# How often to print out a status message.
+#
+mod = 1
+
 for i in range(args.repeat):
     offset = args.offset * (i+1)
 
     f.seek(offset)
 
-    for i in range(args.len):
+    for j in range(args.len):
         f.write(str.encode(args.char))
 
-    print(".", end = "")
+    #
+    # If we're at another order of magnitude, lessen the frequency of printing status messages.
+    #
+    if (i+1) > 10000:
+        mod = 10000
+    elif (i+1) > 1000:
+        mod = 1000
+    elif (i+1) > 100:
+        mod = 100
+    elif (i+1) > 10:
+        mod = 10
+
+    if ( (i+1) % mod ) == 0:
+        print("Corrupted {}/{} times.".format(i+1, args.repeat))
 
 f.close()
 
