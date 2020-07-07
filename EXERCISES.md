@@ -51,6 +51,7 @@
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
       - Try corrupting a adisk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
       - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful.
+- <a href="exercise-answers/4_SIMULATING_DISK_CORRUPTION.md">Answers</a>
 
 
 ## Breaking RAIDZ
