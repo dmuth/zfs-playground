@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# This script is used to brea a disk by overwriting it with a very short string.
+#
+
+# Errors are fatal
+set -e
+
+if test ! "$1"
+then
+	echo "! "
+	echo "! Syntax: $0 filename "
+	echo "! "
+	echo "! filename - Base filename of the disk file.  The path will be prepended."
+	echo "! "
+	exit 1
+fi
+
+
+FILE=$1
+
+#
+# Sanitize the filename and put it into /disks/.
+#
+FILE=$(echo $FILE | sed -e "s/[^a-z0-9-]/_/gi")
+FILE="/disks/${FILE}"
+
+echo "# Breaking disk file ${FILE}..."
+
+echo "BROKEN" > ${FILE}
+
+
