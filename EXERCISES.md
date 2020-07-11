@@ -1,6 +1,8 @@
 
 # Exercises
 
+For all exercises, the Zpool should be called `zfspool`. When the pool is created, a ZFS filesystem will be created mounted to `/zfspool/` by default.
+
 
 ## Basic Exercises
 
@@ -31,14 +33,14 @@
 - Create an unmirroed Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
    - _Hints_: 
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
-      - You can't `rm` a disk file because it won't unlink the inode. Instead, truncate it to zero bytes with `echo "CORRUPT" > /disks/disk0`.
+      - Simulate breaking the disk with the command `break-disk disk0`
       - Run `sha1-check-files` to verify that files are corrupted
       - Run `zfs-add-disk-file disk0 1024` to (re)create the `disk0` file when done with this exercise
 
 - Created a mirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, fix the pool, verify that files are unharmed.
    - _Hints_: 
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
-      - You can't `rm` a disk file because it won't unlink the inode. Instead, truncate it to zero bytes with `echo "CORRUPT" > /disks/disk0`.
+      - Simulate breaking the disk with the command `break-disk disk0`
       - After recovery, run `sha1-check-files` to verify that file contents were unharmed
       - Run `zfs-add-disk-file disk0 1024` to (re)create the `disk0` file when done with this exercise
 - <a href="exercise-answers/3_SIMULATING_HARDWARE_FAILURE.md">Answers</a>
@@ -61,11 +63,9 @@
 
 ## Future Exercise Ideas
 
-- Disk quotas for ZFS filesystems
 - Play with snapshots and rollbacks.
-- Create a raw device in the Zpool and put ext4 on it.
-- Create exercises involving RAIDZ2 and RAIDZ3
-- Look into some more advanced features of ZFS and create exercises based on them.
+- Disk quotas for ZFS filesystems
+- Create a raw device in the Zpool and put ext4 on it. (rollback from a snapshot)
 - Stream one ZFS filessytem to another
 
 
