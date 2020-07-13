@@ -51,14 +51,15 @@ For all exercises, the Zpool should be called `zfspool`. When the pool is create
 - Create a RAIDZ Zpool with 3 disks, corrupt `disk0`, catch the error in ZFS, and repair the pool. Verify the files are unaffected.
    - _Hints:_
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
-      - Try corrupting a adisk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
+      - Try corrupting a disk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
       - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful.
+- Create a RAIDZ Zpool with 3 disks, corrupt `disk0` and `disk1`.  Verify the Zpool is unrecoverable.
+   - _Hints:_
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Try corrupting a disk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
+      - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify that will need to restore from a backup.
 - <a href="exercise-answers/4_SIMULATING_DISK_CORRUPTION.md">Answers</a>
 
-
-## Breaking RAIDZ
-
-- Create a RAIDZ Zpool with 3 disks, corrupt `disk0` and `disk1`.  Verify the Zpool is unrecoverable.
 
 
 ## Future Exercise Ideas

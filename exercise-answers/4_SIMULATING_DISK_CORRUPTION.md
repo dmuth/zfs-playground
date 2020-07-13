@@ -24,5 +24,17 @@
       - `zpool status` - `disk0` is back!
       - `zpool scrub` - Just a good idea
       - `sha1-check-files /zfspool/` - Verify that the files are unharmed
+- Create a RAIDZ Zpool with 3 disks, corrupt `disk0` and `disk1`.  Verify the Zpool is unrecoverable.
+   - Create the zpool:
+      - `zpool create zfspool raidz /disks/disk0 /disks/disk1 /disks/disk2`
+      - `populate-zfs-filesystem /zfspool/ 5 5`
+      - `sha1-check-files /zfspool/` - Initial check
+      - `zpool status` - Verify state is `ONLINE`
+   - Break the disk:
+      - `corrupt --offset 1000 --repeat 1000000 /disks/disk0`
+      - `corrupt --offset 1000 --repeat 1000000 /disks/disk1`
+      - `zpool scrub zfspool` - This completes quickly, and will catch the error
+      - `zpool status` - `disk0` and `disk1` now show as `DEGRADED` and `too many errors`
+      - `sha1-check-files /zfspool/` - Confirm files are corrupted and/or you get `Input/output error` messages.
 
 
