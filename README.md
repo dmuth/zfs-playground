@@ -14,6 +14,16 @@ ZFS testing environment where disk failures and data corruption can be simulated
 - Optionally run `zfs-lab-create` to create a ZFS pool and filesystem in `/zfs/lab1/`.
 
 
+## Poking Under The Hood
+
+The way this project works is by creating 10 1 GB files in the `/disks/` directory on the VM, named `disk0` through `disk9`.  Because in UNIX, devices have file paths, there's no reason that files themselves cannot
+be treated as devices.  This means that entire ZFS filesystems can be created, using these files as standins for multiple physical disks.
+
+Obviously you don't want to use this for production, but having an error of files-pretending-to-be-disks works great for learning how to admin a ZFS filesystem, simulating hardware failures and disk corruption, etc.
+
+This README includes a list of the incldued utilities and how they are used, along with some sample exercises to become better familiar with ZFS.
+
+
 ## Utilities
 
 This repo ships with a number of utilities to automate and semi-automate work related to playing
