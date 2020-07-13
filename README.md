@@ -113,6 +113,16 @@ For all exercises, the Zpool should be called `zfspool`. When the pool is create
 A: It's a UI consideration--I want checksums a little smaller, which will be easier to read.  Keep in mind that the context is "simulating a filesystem", versus "code that is being run in production".  But hey--if this is useful enough that you're looking at using this in production(!), come talk to me and I'll see what I can do. :-)
 
 
+## Resources
+
+- [The Z File System](https://www.freebsd.org/doc/handbook/zfs.html) - From the BSD Documentation.  By far the most useful resource that I have found.
+- [ZFS 101: Understanding ZFS Storage and Performance](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/)
+- [What Is ZFS?](https://docs.oracle.com/cd/E19253-01/819-5461/zfsover-2/)
+- [OpenZFS Documentation](https://openzfs.org/wiki/System_Administration)
+- [Oracle Solaris ZFS Administration Guide](https://docs.oracle.com/cd/E26505_01/html/E37384/index.html)
+- [How to force ZFS to replace a failed drive in place](https://alchemycs.com/2019/05/how-to-force-zfs-to-replace-a-failed-drive-in-place/)
+
+
 ## Credits
 
 - The logo was made over at https://www.freelogodesign.org/
