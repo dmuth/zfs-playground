@@ -35,22 +35,75 @@ around with ZFS.  All scripts are in `/vagrant/bin/` in the VM which is also in 
    - `zfs-destroy-pool-if-exists` - Destory a ZFS pool only if it already exists.
 
 
+## Exercises to Better Learn ZFS
 
-## WORK IN PROGRESS
 
-This is still very much a work in progress, and I don't recommend using it yet. :-)
+For all exercises, the Zpool should be called `zfspool`. When the pool is created, a ZFS filesystem will be created mounted to `/zfspool/` by default.
 
-Here are major things I want to build in to make this actually useful for playing around with ZFS:
 
-- ✅ Helper script to add/remove virtual disks
-- ✅ Helper script to create some Zpools
-- ✅ Helper script to fill a ZFS filesytem with some test files
-- ✅ Helper script to get a SHA1 on our Zpools
-- ✅ Helper script to get a SHA1 on the filesystem CONTENTS of Zpools
-- ✅ Helper script to check SHA1s and ensure that they match
-- ✅ Helper script to corrupt specific bytes in virtual disks
-- Sample exercises for the user to do, such as creating Zpools, recover from corruption, etc.
-- Answers to the sample exercises
+### Basic Exercises
+
+- Create a single disk Zpool with disk `/disks/disk0`. Now destroy it.
+- Create a Zpool with disk `/disks/disk0` through `/disks/disk2`.
+- Craete a ZFS filesystem in the Zpool you just created.
+   - _Hints:_
+      - _Use `zfs set canmount=off ZPOOL_NAME` to disable the mountpoint on the Zpool itself._
+      - _...and try `zfs create` to create a ZFS filesystem under the Zpool._
+- <a href="exercise-answers/1_BASIC_EXERCISES.md">Answers</a>
+
+
+### Less Basic Exercises
+
+- Create a mirrored Zpool with disks `/disks/disk0` and `/disks/disk1`.
+   - _Hint: You should only have two disks in a mirrored Zpool._
+- Create a RAID5/RAIDZ Zpool with disks `/disks/disk0` through `/disks/disk2`.
+   - _Hint: You should have at least 3 disks._
+- Create a RAID6/RAIDZ2 Zpool with disks `/disks/disk0` through `/disks/disk3`.
+   - _Hint: You should have at least 4 disks._
+- Create a RAID7/RAIDZ3 Zpool with disks `/disks/disk0` through `/disks/disk4`.
+   - _Hint: You should have at least 5 disks._
+- <a href="exercise-answers/2_LESS_BASIC_EXERCISES.md">Answers</a>
+  
+ 
+### Simulating Hardware Failure
+
+- Create an unmirroed Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
+   - _Hints_: 
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Simulate breaking the disk with the command `break-disk disk0`
+      - Run `sha1-check-files` to verify that files are corrupted
+      - Run `zfs-add-disk-file disk0 1024` to (re)create the `disk0` file when done with this exercise
+
+- Created a mirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, fix the pool, verify that files are unharmed.
+   - _Hints_: 
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Simulate breaking the disk with the command `break-disk disk0`
+      - After recovery, run `sha1-check-files` to verify that file contents were unharmed
+      - Run `zfs-add-disk-file disk0 1024` to (re)create the `disk0` file when done with this exercise
+- <a href="exercise-answers/3_SIMULATING_HARDWARE_FAILURE.md">Answers</a>
+
+
+### Simulating Disk Corruption
+
+- Create a RAIDZ Zpool with 3 disks, corrupt `disk0`, catch the error in ZFS, and repair the pool. Verify the files are unaffected.
+   - _Hints:_
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Try corrupting a disk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
+      - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify the repairs were successful.
+- Create a RAIDZ Zpool with 3 disks, corrupt `disk0` and `disk1`.  Verify the Zpool is unrecoverable.
+   - _Hints:_
+      - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
+      - Try corrupting a disk with: `corrupt --offset 1000 --repeat 1000000 /disks/disk0`.  This will swiss-cheese the disk in about a few 10s of seconds.
+      - Run `sha1-check-files /path/to/zfs/filesystem` to catch corrupted files and verify that will need to restore from a backup.
+- <a href="exercise-answers/4_SIMULATING_DISK_CORRUPTION.md">Answers</a>
+
+
+### Future Exercise Ideas
+
+- Play with snapshots and rollbacks.
+- Disk quotas for ZFS filesystems
+- Create a raw device in the Zpool and put ext4 on it. (rollback from a snapshot)
+- Stream one ZFS filessytem to another
 
 
 ## FAQ
