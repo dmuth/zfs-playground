@@ -19,6 +19,7 @@ ZFS testing environment where disk failures and data corruption can be simulated
 This repo ships with a number of utilities to automate and semi-automate work related to playing
 around with ZFS.  All scripts are in `/vagrant/bin/` in the VM which is also in your path:
 
+- `break-disk` - Used to break a specific disk file to simulate disk failure.
 - `create` - Create a sample file full of X's.  Useful for testing file corruption as the corruption will be obvious when viewing it with `less`.
 - `corrupt` - Corrupt a file at a certain offset with a certain character for a certain length, optionally repeated a certain number of times.  Useful for running against disks in `/disks/` to simulate disk corruption.
 - `populate-zfs-filesystem` - Uses `create` to populate a target directory with a series of files and directories with 1 MB files.  Useful for testing files for corrption when corrupting a ZFS disk.
