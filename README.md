@@ -3,7 +3,8 @@
 
 # ZFS Playground
 
-ZFS testing environment where disk failures and data corruption can be simulated
+Learn ZFS the easy way with this lab environment where disk failures and corruption can be simulated!
+
 
 ## Quick Start
 
