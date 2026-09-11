@@ -3,7 +3,7 @@
 # Simulating Hardware Failure Exercise Answers
 
 
-- Create an unmirroed Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
+- Create an unmirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
    - Create the zpool:
       - `zpool create zfspool /disks/disk0 /disks/disk1`
       - `populate-zfs-filesystem /zfspool/ 5 5`

@@ -22,7 +22,7 @@ be treated as devices.  This means that entire ZFS filesystems can be created, u
 
 Obviously you don't want to use this for production, but having an error of files-pretending-to-be-disks works great for learning how to admin a ZFS filesystem, simulating hardware failures and disk corruption, etc.
 
-This README includes a list of the incldued utilities and how they are used, along with some sample exercises to become better familiar with ZFS.
+This README includes a list of the included utilities and how they are used, along with some sample exercises to become better familiar with ZFS.
 
 
 ## Utilities
@@ -33,7 +33,7 @@ around with ZFS.  All scripts are in `/vagrant/bin/` in the VM which is also in 
 - `break-disk` - Used to break a specific disk file to simulate disk failure.
 - `create` - Create a sample file full of X's.  Useful for testing file corruption as the corruption will be obvious when viewing it with `less`.
 - `corrupt` - Corrupt a file at a certain offset with a certain character for a certain length, optionally repeated a certain number of times.  Useful for running against disks in `/disks/` to simulate disk corruption.
-- `populate-zfs-filesystem` - Uses `create` to populate a target directory with a series of files and directories with 1 MB files.  Useful for testing files for corrption when corrupting a ZFS disk.
+- `populate-zfs-filesystem` - Uses `create` to populate a target directory with a series of files and directories with 1 MB files.  Useful for testing files for corruption when corrupting a ZFS disk.
 - `sha1-save-files` - Compute SHA1 hashes recursively of a directory and its files and save the files in `/data/`.
 - `sha1-check-files` - Check against previously computed hashes recursively and look for corruption. Output is written in `diff` format.
 - `truncate-disk` - Used to truncate a specific disk image to a specific number of bytes.  Useful to simulate disk failures.
@@ -44,7 +44,7 @@ around with ZFS.  All scripts are in `/vagrant/bin/` in the VM which is also in 
    - `zfs-rm-disk-file` - Removes a file created by `zfs-add-disk-file`.
    - `zfs-create-pool` - Create a ZFS pool of disks.  Used by `zfs-lab-create`.
    - `zfs-destroy-pool` - Destroy a ZFS pool of disks.
-   - `zfs-destroy-pool-if-exists` - Destory a ZFS pool only if it already exists.
+   - `zfs-destroy-pool-if-exists` - Destroy a ZFS pool only if it already exists.
 
 
 ## Exercises to Better Learn ZFS
@@ -57,7 +57,7 @@ For all exercises, the Zpool should be called `zfspool`. When the pool is create
 
 - Create a single disk Zpool with disk `/disks/disk0`. Now destroy it.
 - Create a Zpool with disk `/disks/disk0` through `/disks/disk2`.
-- Craete a ZFS filesystem in the Zpool you just created.
+- Create a ZFS filesystem in the Zpool you just created.
    - _Hints:_
       - _Use `zfs set canmount=off ZPOOL_NAME` to disable the mountpoint on the Zpool itself._
       - _...and try `zfs create` to create a ZFS filesystem under the Zpool._
@@ -79,7 +79,7 @@ For all exercises, the Zpool should be called `zfspool`. When the pool is create
  
 ### Simulating Hardware Failure
 
-- Create an unmirroed Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
+- Create an unmirrored Zpool called `zfspool`, remove `/disks/disk0`, catch the error in ZFS, confirm that the pool is utterly broken and that your files are unrecoverable.
    - _Hints_: 
       - Run `populate-zfs-filesystem /zfspool/ 5 5` to create sample files in the ZFS filesystem and save SHA1 hashes of those files.
       - Simulate breaking the disk with the command `break-disk disk0`
@@ -115,12 +115,12 @@ For all exercises, the Zpool should be called `zfspool`. When the pool is create
 - Play with snapshots and rollbacks.
 - Disk quotas for ZFS filesystems
 - Create a raw device in the Zpool and put ext4 on it. (rollback from a snapshot)
-- Stream one ZFS filessytem to another
+- Stream one ZFS filesystem to another
 
 
 ## FAQ
 
-### Q: Why SHA1 and now SHA512?
+### Q: Why SHA1 and not SHA512?
 
 A: It's a UI consideration--I want checksums a little smaller, which will be easier to read.  Keep in mind that the context is "simulating a filesystem", versus "code that is being run in production".  But hey--if this is useful enough that you're looking at using this in production(!), come talk to me and I'll see what I can do. :-)
 

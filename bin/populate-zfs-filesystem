@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # This script populates a filesystem with dummy files and directories.
-# The files are all uniform in size and strucuture, which makes it easy 
+# The files are all uniform in size and structure, which makes it easy 
 # to detect if there is any corruption.
 #
 # Finally, sha1 sums are taken of each file so that corruption can be detected

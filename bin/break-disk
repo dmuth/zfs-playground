@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# This script is used to brea a disk by overwriting it with a very short string.
+# This script is used to break a disk by overwriting it with a very short string.
 #
 
 # Errors are fatal
